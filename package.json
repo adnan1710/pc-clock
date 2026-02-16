@@ -1,6 +1,9 @@
 {
     "name": "fluent-clock",
     "version": "0.1.0",
+    "description": "Minimal Electron + Vite + React clock with Fluent/Acrylic styling",
+    "author": "Md Adnan Akhtar",
+    "license": "MIT",
     "private": true,
     "main": "main.js",
     "scripts": {
@@ -28,15 +31,16 @@
     "build": {
         "appId": "com.example.fluentclock",
         "productName": "FluentFocus Clock",
+        "publish": null,
         "win": {
             "target": [
                 "nsis"
             ],
-            "icon": "assets/icon.svg"
+            "icon": "assets/icon.png"
         },
         "nsis": {
-            "installerIcon": "assets/icon.svg",
-            "uninstallerIcon": "assets/icon.svg"
+            "installerIcon": "assets/icon.png",
+            "uninstallerIcon": "assets/icon.png"
         },
         "files": [
             "dist/**/*",
