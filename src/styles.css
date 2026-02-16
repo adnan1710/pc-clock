@@ -1,0 +1,196 @@
+:root {
+    --bg-light: #f3f4f6;
+    --bg-dark: #17191b;
+    /* darker slate for contrast with flip cards */
+    --text-light: #1a1a1a;
+    --text-dark: #ffffff;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+.app {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app.dark {
+    background: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+.app.light {
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+
+.clock-root {
+    -webkit-app-region: no-drag;
+    text-align: center;
+}
+
+.time {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.digits {
+    font-size: inherit;
+}
+
+.seconds {
+    opacity: 0.9
+}
+
+.colon {
+    opacity: 0.9;
+    transition: transform 0.25s ease;
+}
+
+.colon.pulse {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1)
+    }
+
+    50% {
+        transform: scale(1.08)
+    }
+
+    100% {
+        transform: scale(1)
+    }
+}
+
+.control-panel {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    bottom: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    -webkit-app-region: no-drag;
+}
+
+.control-panel.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.controls-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    padding: 8px 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.btn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: 18px;
+    padding: 6px;
+    cursor: pointer;
+    transition: transform 0.12s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.slider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: inherit
+}
+
+.slider input[type=range] {
+    cursor: pointer
+}
+
+/* Ensure text is selectable for settings */
+label {
+    font-size: 12px;
+}
+
+/* ========== FLIP CLOCK ANIMATIONS (Used in MUI sx prop) ========== */
+
+@keyframes flipCardTop {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(-90deg);
+    }
+}
+
+@keyframes flipCardBottom {
+    0% {
+        transform: rotateX(90deg);
+    }
+
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+@keyframes flipCardBackTop {
+    0% {
+        opacity: 0;
+        transform: rotateX(0deg);
+    }
+
+    1% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(-90deg);
+    }
+}
+
+@keyframes flipCardBackBottom {
+    0% {
+        opacity: 0;
+        transform: rotateX(90deg);
+    }
+
+    1% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg);
+    }
+}
