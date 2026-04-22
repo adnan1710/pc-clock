@@ -2,8 +2,8 @@ const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
 
 function createWindow() {
-    // Icon path for production (requires icon.png in assets folder)
-    const iconPath = path.join(__dirname, 'assets', 'icon.png');
+    // Icon path for production (requires icon.ico in assets folder)
+    const iconPath = path.join(__dirname, 'assets', 'icon.ico');
     const iconExists = require('fs').existsSync(iconPath);
     
     const win = new BrowserWindow({

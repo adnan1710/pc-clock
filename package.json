@@ -36,11 +36,11 @@
             "target": [
                 "nsis"
             ],
-            "icon": "assets/icon.png"
+            "icon": "assets/icon.ico"
         },
         "nsis": {
-            "installerIcon": "assets/icon.png",
-            "uninstallerIcon": "assets/icon.png"
+            "installerIcon": "assets/icon.ico",
+            "uninstallerIcon": "assets/icon.ico"
         },
         "files": [
             "dist/**/*",
