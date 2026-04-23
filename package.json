@@ -11,9 +11,16 @@
         "build": "vite build",
         "preview": "vite preview --port 5173",
         "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
-        "electron:build": "electron-builder"
+        "electron:build": "npm run build && electron-builder"
     },
     "dependencies": {
+    },
+    "devDependencies": {
+        "vite": "^5.0.0",
+        "electron": "^26.0.0",
+        "electron-builder": "^24.0.0",
+        "concurrently": "^8.0.0",
+        "wait-on": "^7.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "@mui/material": "^5.14.0",
@@ -21,17 +28,14 @@
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0"
     },
-    "devDependencies": {
-        "vite": "^5.0.0",
-        "electron": "^26.0.0",
-        "electron-builder": "^24.0.0",
-        "concurrently": "^8.0.0",
-        "wait-on": "^7.0.0"
-    },
     "build": {
         "appId": "com.example.fluentclock",
-        "productName": "FluentFocus Clock",
+        "productName": "Fluent-Focus Clock",
         "publish": null,
+        "directories": {
+            "output": "release"
+        },
+        "compression": "maximum",
         "win": {
             "target": [
                 "nsis"

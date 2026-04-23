@@ -35,9 +35,11 @@ function createWindow() {
         win.loadFile(path.join(__dirname, 'dist', 'index.html'));
     }
 
-    // Maximize and show window
-    win.maximize();
-    win.show();
+    // Wait for the window to be ready before showing to prevent white flash
+    win.once('ready-to-show', () => {
+        win.maximize();
+        win.show();
+    });
 
     // Optionally open devtools in dev
     if (isDev) win.webContents.openDevTools({ mode: 'detach' });
