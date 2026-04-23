@@ -1,6 +1,6 @@
 {
     "name": "fluent-clock",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Minimal Electron + Vite + React clock with Fluent/Acrylic styling",
     "author": "Md Adnan Akhtar",
     "license": "MIT",
@@ -13,8 +13,7 @@
         "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
         "electron:build": "npm run build && electron-builder"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "vite": "^5.0.0",
         "electron": "^26.0.0",
