@@ -1,6 +1,6 @@
 {
     "name": "fluent-clock",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Minimal Electron + Vite + React clock with Fluent/Acrylic styling",
     "author": "Md Adnan Akhtar",
     "license": "MIT",
