@@ -1,7 +1,6 @@
 :root {
     --bg-light: #f3f4f6;
     --bg-dark: #17191b;
-    /* darker slate for contrast with flip cards */
     --text-light: #1a1a1a;
     --text-dark: #ffffff;
 }
@@ -13,6 +12,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 #root {
@@ -26,6 +27,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app.dark {
@@ -69,6 +71,10 @@ body {
     animation: pulse 1s infinite;
 }
 
+.colon.pulse-min {
+    animation: pulse 60s infinite;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1)
@@ -82,6 +88,7 @@ body {
         transform: scale(1)
     }
 }
+
 
 .control-panel {
     position: fixed;
@@ -103,8 +110,8 @@ body {
 .controls-inner {
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.08);
+    gap: 0;
+    background: rgba(62, 62, 62, 0.136);
     backdrop-filter: blur(12px);
     border-radius: 10px;
     padding: 8px 12px;
@@ -136,7 +143,6 @@ body {
     cursor: pointer
 }
 
-/* Ensure text is selectable for settings */
 label {
     font-size: 12px;
 }
@@ -192,5 +198,58 @@ label {
     100% {
         opacity: 1;
         transform: rotateX(0deg);
+    }
+}
+
+/* ========== THEME ICON SLIDE ANIMATIONS ========== */
+
+.icon-container {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-icon {
+    position: absolute;
+    transition: transform 0.3s ease;
+    opacity: 0;
+    transform: translateX(0);
+}
+
+.theme-icon.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.icon-container.animating .theme-icon.slide-out {
+    animation: slideOutLeft 0.3s ease forwards;
+}
+
+.icon-container.animating .theme-icon.slide-in {
+    animation: slideInRight 0.3s ease forwards;
+}
+
+@keyframes slideOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-24px);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
     }
 }

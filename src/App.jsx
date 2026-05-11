@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
-import ClockDisplay from './components/ClockDisplay'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import DigitalClock from './components/DigitalClock'
 import FlipClock from './components/FlipClock'
 import ControlPanel from './components/ControlPanel'
 
@@ -12,23 +13,25 @@ export default function App() {
     const [is24HrFormat, setIs24HrFormat] = useState(() => localStorage.getItem('is24HrFormat') === 'false' ? false : true)
     const timeoutRef = useRef(null)
 
-    // Save theme to localStorage
+    const muiTheme = useMemo(() => createTheme({
+        palette: {
+            mode: theme === 'light' ? 'light' : 'dark',
+        },
+    }), [theme])
+
     useEffect(() => {
         localStorage.setItem('theme', theme)
         document.documentElement.setAttribute('data-theme', theme)
     }, [theme])
 
-    // Save fontSize to localStorage
     useEffect(() => {
         localStorage.setItem('fontSize', fontSize)
     }, [fontSize])
 
-    // Save flipMode to localStorage
     useEffect(() => {
         localStorage.setItem('flipMode', flipMode)
     }, [flipMode])
 
-    // Save is24HrFormat to localStorage
     useEffect(() => {
         localStorage.setItem('is24HrFormat', is24HrFormat)
     }, [is24HrFormat])
@@ -53,7 +56,6 @@ export default function App() {
         if (window.electronAPI && window.electronAPI.toggleFullscreen) {
             window.electronAPI.toggleFullscreen()
         } else {
-            // fallback to browser fullscreen
             if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => { })
             else document.exitFullscreen().catch(() => { })
         }
@@ -66,13 +68,15 @@ export default function App() {
     }, [])
 
     return (
-        <div className={`app ${theme}`}>
-            {flipMode ? (
-                <FlipClock fontFamily={`Segoe UI, -apple-system, system-ui, sans-serif`} fontSize={fontSize} is24HrFormat={is24HrFormat} />
-            ) : (
-                <ClockDisplay fontFamily={`Segoe UI, -apple-system, system-ui, sans-serif`} fontSize={fontSize} is24HrFormat={is24HrFormat} />
-            )}
-            <ControlPanel isVisible={controlsVisible} setTheme={setTheme} fontSize={fontSize} setFontSize={setFontSize} onToggleFullscreen={toggleFullscreen} isFullscreen={isFullscreen} flipMode={flipMode} setFlipMode={setFlipMode} is24HrFormat={is24HrFormat} setIs24HrFormat={setIs24HrFormat} />
-        </div>
+        <ThemeProvider theme={muiTheme}>
+            <div className={`app ${theme}`}>
+                {flipMode ? (
+                    <FlipClock fontFamily={`Segoe UI, -apple-system, system-ui, sans-serif`} fontSize={fontSize} is24HrFormat={is24HrFormat} />
+                ) : (
+                    <DigitalClock fontFamily={`Segoe UI, -apple-system, system-ui, sans-serif`} fontSize={fontSize} is24HrFormat={is24HrFormat} />
+                )}
+                <ControlPanel isVisible={controlsVisible} setTheme={setTheme} fontSize={fontSize} setFontSize={setFontSize} onToggleFullscreen={toggleFullscreen} isFullscreen={isFullscreen} flipMode={flipMode} setFlipMode={setFlipMode} is24HrFormat={is24HrFormat} setIs24HrFormat={setIs24HrFormat} theme={theme} />
+            </div>
+        </ThemeProvider>
     )
 }

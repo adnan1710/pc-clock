@@ -44,6 +44,10 @@ function createWindow() {
     // Optionally open devtools in dev
     if (isDev) win.webContents.openDevTools({ mode: 'detach' });
 
+    win.webContents.on('console-message', (event, level, message, line, sourceId) => {
+        console.log(`[Browser Console] ${message} (line ${line}, ${sourceId})`);
+    });
+
     return win;
 }
 

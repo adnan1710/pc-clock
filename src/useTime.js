@@ -1,12 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 function pad(n) { return n.toString().padStart(2, '0') }
 
 export default function useTime(is24HrFormat = true) {
     const [now, setNow] = useState(new Date())
+    const [minuteChanged, setMinuteChanged] = useState(false)
+    const prevMinuteRef = useRef(now.getMinutes())
 
     useEffect(() => {
-        const id = setInterval(() => setNow(new Date()), 1000)
+        const id = setInterval(() => {
+            const newNow = new Date()
+            const currentMinute = newNow.getMinutes()
+            
+            if (currentMinute !== prevMinuteRef.current) {
+                setMinuteChanged(true)
+                setTimeout(() => setMinuteChanged(false), 1000)
+                prevMinuteRef.current = currentMinute
+            }
+            
+            setNow(newNow)
+        }, 1000)
         return () => clearInterval(id)
     }, [])
 
@@ -22,5 +35,5 @@ export default function useTime(is24HrFormat = true) {
         hh = pad(hours12)
     }
 
-    return { now, timeString: `${hh}:${mm}:${ss}`, hh, mm, ss, meridiem, is24HrFormat }
+    return { now, timeString: `${hh}:${mm}:${ss}`, hh, mm, ss, meridiem, is24HrFormat, minuteChanged }
 }

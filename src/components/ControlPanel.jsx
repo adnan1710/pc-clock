@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
@@ -11,23 +11,39 @@ import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 import WbSunnyIcon from '@mui/icons-material/WbSunny'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 
-export default function ControlPanel({ isVisible, setTheme, fontSize, setFontSize, onToggleFullscreen, isFullscreen, flipMode, setFlipMode, is24HrFormat, setIs24HrFormat }) {
+export default function ControlPanel({ isVisible, setTheme, fontSize, setFontSize, onToggleFullscreen, isFullscreen, flipMode, setFlipMode, is24HrFormat, setIs24HrFormat, theme }) {
+    const [isAnimating, setIsAnimating] = useState(false)
+
+    const toggleTheme = () => {
+        setIsAnimating(true)
+        setTimeout(() => {
+            setTheme(theme === 'light' ? 'dark' : 'light')
+            setIsAnimating(false)
+        }, 150)
+    }
+
     return (
         <div className={`control-panel ${isVisible ? 'visible' : ''}`} aria-hidden={!isVisible}>
             <div className="controls-inner">
-                <Tooltip title="Light theme">
-                    <IconButton color="inherit" onClick={() => setTheme('light')}>
-                        <WbSunnyIcon />
+                <Tooltip title={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}>
+                    <IconButton 
+                        color="inherit" 
+                        onClick={toggleTheme}
+                        disabled={isAnimating}
+                        sx={{ 
+                            position: 'relative',
+                            overflow: 'hidden',
+                            '&:hover': { transform: 'scale(1.1)' }
+                        }}
+                    >
+                        <div className={`icon-container ${isAnimating ? 'animating' : ''}`}>
+                            <WbSunnyIcon className={`theme-icon sun-icon ${theme === 'light' && !isAnimating ? 'active' : ''} ${isAnimating ? 'slide-out' : ''}`} />
+                            <DarkModeIcon className={`theme-icon moon-icon ${theme === 'dark' && !isAnimating ? 'active' : ''} ${isAnimating ? 'slide-in' : ''}`} />
+                        </div>
                     </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Dark theme">
-                    <IconButton color="inherit" onClick={() => setTheme('dark')}>
-                        <DarkModeIcon />
-                    </IconButton>
-                </Tooltip>
-
-                <Box sx={{ width: 200, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ width: 200, display: 'flex', alignItems: 'center', gap: 1, marginLeft:3, marginRight:5 }}>
                     <Box sx={{ minWidth: 40 }}>
                         <label style={{ fontSize: 12 }}>Size</label>
                     </Box>
